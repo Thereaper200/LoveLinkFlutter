@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../components/lovetextfield.dart';
 import '../components/lovebutton.dart';
+import '../mainpages/mainmenu.dart';
+
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -23,7 +25,9 @@ class _LoginState extends State<Login> {
       print("Es necesario una contraseña");
     return;
     }
-    print("Inicio de sesion exitoso");
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const LoveMenu())
+    );
   }
 
   double getTextFieldSize() {
@@ -33,47 +37,50 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Container(color: Colors.white,),
-             Column(
-              children: [
-                SizedBox(width: double.infinity,),
-                const Spacer(),
-                Image.asset("images/logo.jpeg", height: 200,),
-                const Spacer(),
-                LoveTextField(
-                  Wsize: getTextFieldSize(),
-                  ObscuredText: false,
-                  PlaceHolder: 'Nombre',
-                  Icono: Icon(Icons.email),
-                  controller: userController,
-                ),
-                const SizedBox(height: 15,),
-                LoveTextField(
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Container(color: Colors.white,),
+              Column(
+                children: [
+                  SizedBox(width: double.infinity,),
+                  const Spacer(),
+                  Image.asset("assets/images/logo.jpeg", height: 200,),
+                  const Spacer(),
+                  LoveTextField(
+                    Wsize: getTextFieldSize(),
+                    ObscuredText: false,
+                    PlaceHolder: 'Nombre',
+                    Icono: Icon(Icons.email),
+                    controller: userController,
+                  ),
+                  const SizedBox(height: 15,),
+                  LoveTextField(
                     PlaceHolder: "Contraseña",
                     ObscuredText: true,
                     Wsize: getTextFieldSize(),
                     Icono: Icon(Icons.lock),
-                  controller: passwordController,
-                ),
-                const Spacer(flex: 2),
-                GestureDetector(
-                  onTap: makeLogin,
-                  child: LoveButton(texto: "Iniciar Sesión",
-                      Wsize: getTextFieldSize()
+                    controller: passwordController,
                   ),
-                ),
-                const SizedBox(height: 15,),
-                Text("Registrate", style: TextStyle(fontSize: 20),),
-                const Spacer(),
-              ],
-            ),
-          ],
+                  const Spacer(flex: 2),
+                  GestureDetector(
+                    onTap: makeLogin,
+                    child: LoveButton(texto: "Iniciar Sesión",
+                        Wsize: getTextFieldSize()
+                    ),
+                  ),
+                  const SizedBox(height: 15,),
+                  Text("Registrate", style: TextStyle(fontSize: 20),),
+                  const Spacer(),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 }
